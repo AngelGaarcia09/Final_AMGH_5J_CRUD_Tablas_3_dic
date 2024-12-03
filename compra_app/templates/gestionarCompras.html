@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block cuerpo %}
+<div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <h1>Registrar Compra</h1>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarCompra/" method="POST"> {% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="txtcodigo" name="txtcodigo" class="form-control" placeholder="ID Compra" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="date" id="txtfecha" name="txtfecha" class="form-control" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="number" id="txttrabajador" name="txttrabajador" class="form-control" placeholder="ID Trabajador" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="number" id="txttroca" name="txttroca" class="form-control" placeholder="ID Troca" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" step="0.01" id="txtganancias" name="txtganancias" class="form-control" placeholder="Ganancias" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" id="txtforma" name="txtforma" class="form-control" placeholder="Forma de Pago" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" step="0.01" id="txttotal" name="txttotal" class="form-control" placeholder="Total" required>
+                    </div>
+                    <div class="form-group py-3">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+        <img class="w-50" src="{% static 'img/v.jpg' %}" width="400" height="400" alt="">
+        <h1>Listado de Compras</h1>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID Compra</th>
+                        <th>Fecha</th>
+                        <th>ID Trabajador</th>
+                        <th>ID Troca</th>
+                        <th>Ganancias</th>
+                        <th>Forma de Pago</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in miscompras %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ c.id_compra }}</td>
+                        <td>{{ c.fecha_compra }}</td>
+                        <td>{{ c.id_trabajador }}</td>
+                        <td>{{ c.id_troca }}</td>
+                        <td>{{ c.ganancias }}</td>
+                        <td>{{ c.forma_de_pago }}</td>
+                        <td>{{ c.total }}</td>
+                        <td>
+                            <a href="seleccionarCompra/{{ c.id_compra }}" class="btn btn-info">Editar</a>
+                            <a href="borrarCompra/{{ c.id_compra }}" class="btn btn-danger">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
